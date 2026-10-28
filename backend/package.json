@@ -1,0 +1,15 @@
+{
+  "name": "portfolio-backend",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Custom CMS backend for a professional portfolio website",
+  "type": "module",
+  "main": "src/server.js",
+  "scripts": {
+    "dev": "nodemon src/server.js",
+    "start": "node src/server.js"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
