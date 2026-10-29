@@ -1,5 +1,7 @@
 import { Router } from "express";
 
+import authRoutes from "./auth.routes.js";
+
 const router = Router();
 
 router.get("/health", (req, res) => {
@@ -10,9 +12,16 @@ router.get("/health", (req, res) => {
 
     data: {
       status: "healthy",
+
       service: "portfolio-backend",
     },
   });
 });
+
+router.use(
+  "/auth",
+
+  authRoutes
+);
 
 export default router;
