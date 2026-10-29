@@ -1,8 +1,8 @@
 import { Router } from "express";
 
 import {
-  getPublicExperience,
-  getAdminExperience,
+  getExperiences,
+  getExperienceById,
   createExperience,
   updateExperience,
   deleteExperience,
@@ -11,7 +11,7 @@ import {
 import {
   experienceSchema,
   updateExperienceSchema,
-} from "../modules/experience/experience.validator.js";
+} from "./experience.validator.js";
 
 import asyncHandler from "../utils/asyncHandler.js";
 import requireAdmin from "../middleware/requireAdmin.js";

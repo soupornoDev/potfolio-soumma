@@ -1,8 +1,16 @@
-import Experience from "./experience.model.js";
+// backend/src/modules/experience/experience.controller.js
+
+import Experience from "./experience.js";
 import { createCrudController } from "../../utils/createCrudController.js";
 
-export const experienceController = createCrudController({
-  Model: Experience,
-  publicFilter: { published: true },
-  sort: { order: 1, startDate: -1 },
+const experienceController = createCrudController(Experience, {
+  resourceName: "Experience",
 });
+
+export const {
+  getAll: getExperiences,
+  getById: getExperienceById,
+  create: createExperience,
+  update: updateExperience,
+  remove: deleteExperience,
+} = experienceController;
