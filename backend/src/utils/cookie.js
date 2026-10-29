@@ -1,18 +1,22 @@
 import { env } from "../config/env.js";
 
-export const getCookieOptions = () => {
-  const isProduction =
-    env.NODE_ENV === "production";
+/**
+ * Generates standard secure cookie options for Express response.
+ * @param {object} customOptions - Additional or overridden cookie settings
+ * @returns {object} Cookie configuration object
+ */
+const getCookieOptions = (customOptions = {}) => {
+  const isProduction = env.NODE_ENV === "production";
 
-  return {
+  const baseOptions = {
     httpOnly: true,
-
     secure: isProduction,
-
-    sameSite: "lax",
-
+    sameSite: isProduction ? "none" : "lax", // Cross-site request handle korar jonnyo production-e 'none' crucial
     path: "/",
-
-    maxAge: 15 * 60 * 1000,
+    maxAge: 15 * 60 * 1000, // 15 Minutes default fallback
   };
+
+  return { ...baseOptions, ...customOptions };
 };
+
+export default getCookieOptions;
