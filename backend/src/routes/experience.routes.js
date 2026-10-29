@@ -15,7 +15,7 @@ import {
 
 import asyncHandler from "../utils/asyncHandler.js";
 import requireAdmin from "../middleware/requireAdmin.js";
-import validateBody from "../middleware/validateBody.js";
+import { validateBody } from "../middleware/validate.middleware.js";
 
 const router = Router();
 
