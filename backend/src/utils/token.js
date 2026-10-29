@@ -1,19 +1,22 @@
-import jwt from "jsonwebtoken";
-import { env } from "../config/env.js";
+// backend/src/utils/token.js
 
-const generateAccessToken = (admin) => {
+import jwt from "jsonwebtoken";
+
+export function generateAccessToken(admin) {
+  if (!admin?._id) {
+    throw new Error("Admin ID is required to generate access token");
+  }
+
   return jwt.sign(
     {
-      sub: admin._id.toString(),
+      adminId: admin._id.toString(),
       role: admin.role,
     },
-    env.JWT_SECRET,
+    process.env.JWT_SECRET,
     {
-      expiresIn: env.JWT_EXPIRES_IN,
-      issuer: "portfolio-cms",
-      audience: "portfolio-admin",
+      expiresIn: process.env.JWT_EXPIRES_IN || "1d",
     }
   );
-};
+}
 
 export default generateAccessToken;
