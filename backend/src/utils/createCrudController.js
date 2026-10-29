@@ -1,6 +1,7 @@
 import ApiError from "./ApiError.js";
+import asyncHandler from "./asyncHandler.js"; // Default import use kora hoyeche
 
-export function createCrudController({
+function createCrudController({
   Model,
   createSchema,
   updateSchema,
@@ -9,7 +10,7 @@ export function createCrudController({
 }) {
   return {
     // Public: published content only
-    getPublic: async (req, res) => {
+    getPublic: asyncHandler(async (req, res) => {
       const items = await Model.find(publicFilter).sort(sort);
 
       res.status(200).json({
@@ -17,10 +18,10 @@ export function createCrudController({
         count: items.length,
         data: items,
       });
-    },
+    }),
 
     // Admin: all content
-    getAdmin: async (req, res) => {
+    getAdmin: asyncHandler(async (req, res) => {
       const items = await Model.find().sort(sort);
 
       res.status(200).json({
@@ -28,9 +29,9 @@ export function createCrudController({
         count: items.length,
         data: items,
       });
-    },
+    }),
 
-    create: async (req, res) => {
+    create: asyncHandler(async (req, res) => {
       const item = await Model.create(req.validatedBody);
 
       res.status(201).json({
@@ -38,9 +39,9 @@ export function createCrudController({
         message: "Created successfully",
         data: item,
       });
-    },
+    }),
 
-    update: async (req, res) => {
+    update: asyncHandler(async (req, res) => {
       const item = await Model.findByIdAndUpdate(
         req.params.id,
         req.validatedBody,
@@ -59,9 +60,9 @@ export function createCrudController({
         message: "Updated successfully",
         data: item,
       });
-    },
+    }),
 
-    remove: async (req, res) => {
+    remove: asyncHandler(async (req, res) => {
       const item = await Model.findByIdAndDelete(req.params.id);
 
       if (!item) {
@@ -72,6 +73,8 @@ export function createCrudController({
         success: true,
         message: "Deleted successfully",
       });
-    },
+    }),
   };
 }
+
+export default createCrudController;
